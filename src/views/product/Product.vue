@@ -1,10 +1,16 @@
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useProductStore } from '@/stores/productStore.js'
 import { useRouter } from 'vue-router'
 
 const store = useProductStore()
 const router = useRouter()
+
+const selectedKategori = ref('Semua')
+const customKategori = ref('')
+
+// Daftar kategori tetap
+const kategoriTetap = ['Semua', 'Kebutuhan Pokok', 'Makanan Ringan', 'Minuman', 'Bumbu Dapur', 'Kesehatan', 'Lainnya']
 
 onMounted(() => {
   store.getProducts()
@@ -19,6 +25,17 @@ const deleteProduct = async (id) => {
     await store.deleteProduct(id)
   }
 }
+
+// Handle filter data
+const filteredProducts = computed(() => {
+  const kategori = selectedKategori.value === 'Lainnya' ? customKategori.value : selectedKategori.value
+  return store.byKategori(kategori)
+})
+
+// Reset custom kategori jika bukan 'Lainnya'
+watch(selectedKategori, (val) => {
+  if (val !== 'Lainnya') customKategori.value = ''
+})
 </script>
 
 <template>
@@ -28,6 +45,30 @@ const deleteProduct = async (id) => {
       <h1 class="text-3xl font-bold text-gray-800">Daftar Produk</h1>
       <p class="text-gray-600 mt-2">Kelola produk kedai harian Anda</p>
       <div class="w-20 h-1 bg-gradient-to-r from-sky-400 to-blue-500 rounded-full mt-3"></div>
+    </div>
+
+    <!-- Filter Kategori -->
+    <div class="mb-6 max-w-sm">
+      <label class="block mb-1 text-sm font-semibold text-gray-700">Filter berdasarkan kategori:</label>
+      <select
+        v-model="selectedKategori"
+        class="w-full border border-gray-300 rounded px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+      >
+        <option v-for="kategori in kategoriTetap" :key="kategori" :value="kategori">
+          {{ kategori }}
+        </option>
+      </select>
+
+      <!-- Input kategori jika 'Lainnya' dipilih -->
+      <div v-if="selectedKategori === 'Lainnya'" class="mt-3">
+        <label class="block mb-1 text-sm font-semibold text-gray-700">Kategori khusus</label>
+        <input
+          v-model="customKategori"
+          type="text"
+          placeholder="Masukkan kategori baru"
+          class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        />
+      </div>
     </div>
 
     <!-- Tabel Produk -->
@@ -44,7 +85,7 @@ const deleteProduct = async (id) => {
         </thead>
         <tbody class="divide-y divide-gray-200">
           <tr
-            v-for="product in store.products"
+            v-for="product in filteredProducts"
             :key="product.id"
             class="hover:bg-sky-50 transition duration-200"
           >
@@ -74,9 +115,9 @@ const deleteProduct = async (id) => {
         </tbody>
       </table>
 
-      <!-- Jika data kosong -->
-      <div v-if="store.products.length === 0" class="p-6 text-center text-gray-500">
-        Tidak ada produk yang tersedia.
+      <!-- Kosong -->
+      <div v-if="filteredProducts.length === 0" class="p-6 text-center text-gray-500">
+        Tidak ada produk dalam kategori ini.
       </div>
     </div>
   </div>
