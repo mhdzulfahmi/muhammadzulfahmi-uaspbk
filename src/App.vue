@@ -4,6 +4,9 @@ import Sidebar from '@/components/Sidebar.vue';
 
 <template>
     <Sidebar />
+    <div class="ml-64">
+        <router-view />
+    </div>
 </template>
 
 <style scoped></style>
