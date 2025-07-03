@@ -1,0 +1,32 @@
+{
+  "product": [
+    {
+      "id": "1",
+      "nama": "Minyak Goreng 1L",
+      "kategori": "Kebutuhan Pokok",
+      "harga": 18000,
+      "stok": 25
+    },
+    {
+      "id": "2",
+      "nama": "Indomie Goreng",
+      "kategori": "Makanan Instan",
+      "harga": 3000,
+      "stok": 100
+    },
+    {
+      "id": "3",
+      "nama": "Susu UHT 250ml",
+      "kategori": "Minuman",
+      "harga": 7000,
+      "stok": 50
+    },
+    {
+      "id": "4",
+      "nama": "Beras 5Kg",
+      "kategori": "Kebutuhan Pokok",
+      "harga": 60000,
+      "stok": 10
+    }
+  ]
+}
