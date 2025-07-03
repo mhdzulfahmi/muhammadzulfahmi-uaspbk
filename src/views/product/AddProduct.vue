@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useProductStore } from '@/stores/ProductStore'
 
@@ -8,16 +8,33 @@ const store = useProductStore()
 
 // Form fields
 const nama = ref('')
-const kategori = ref('Makanan')
+const kategori = ref('')
+const customKategori = ref('')
 const harga = ref('')
 const stok = ref(0)
+const isCustomKategori = ref(false)
+
+const kategoriOptions = [
+  'Kebutuhan Pokok',
+  'Minuman',
+  'Bumbu Dapur',
+  'Snack',
+  'Perlengkapan Mandi',
+  'Lainnya'
+]
+
+watch(kategori, (value) => {
+  isCustomKategori.value = value === 'Lainnya'
+})
 
 // Reset form
 const resetForm = () => {
   nama.value = ''
-  kategori.value = 'Makanan'
+  kategori.value = ''
+  customKategori.value = ''
   harga.value = ''
   stok.value = 0
+  isCustomKategori.value = false
 }
 
 // Submit handler
@@ -27,9 +44,16 @@ const handleSubmit = async () => {
     return
   }
 
+  const finalKategori = isCustomKategori.value ? customKategori.value.trim() : kategori.value
+
+  if (!finalKategori) {
+    alert('Kategori harus diisi.')
+    return
+  }
+
   const newProduct = {
     nama: nama.value,
-    kategori: kategori.value,
+    kategori: finalKategori,
     harga: Number(harga.value),
     stok: Number(stok.value)
   }
@@ -70,10 +94,20 @@ const handleSubmit = async () => {
             v-model="kategori"
             class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
-            <option value="Makanan">Makanan</option>
-            <option value="Minuman">Minuman</option>
-            <option value="Lainnya">Lainnya</option>
+            <option disabled value="">-- Pilih Kategori --</option>
+            <option v-for="item in kategoriOptions" :key="item" :value="item">{{ item }}</option>
           </select>
+        </div>
+
+        <!-- Kategori Custom -->
+        <div v-if="isCustomKategori">
+          <label class="block text-sm font-bold text-gray-700 mb-1 mt-2">Kategori Baru</label>
+          <input
+            v-model="customKategori"
+            type="text"
+            placeholder="Contoh: Alat Tulis"
+            class="w-full border border-blue-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
         </div>
 
         <!-- Harga -->

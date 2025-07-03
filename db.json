@@ -1,11 +1,11 @@
 {
   "product": [
     {
-      "id": "1",
       "nama": "Minyak Goreng 1L",
-      "kategori": "Kebutuhan Pokok",
+      "kategori": "Lainnya",
       "harga": 18000,
-      "stok": 25
+      "stok": 25,
+      "id": "1"
     },
     {
       "id": "2",
