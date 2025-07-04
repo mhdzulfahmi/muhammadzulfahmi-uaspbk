@@ -27,26 +27,29 @@
 
 ---
 
-## 📁 Struktur Folder
-src/
-├── assets/
-├── components/
-│ └── Sidebar.vue
-├── router/
-│ └── index.js
-├── stores/
-│ └── productStore.js
-├── views/
-│ ├── dashboard/ # Dashboard utama
-│ ├── product/
-│ │ ├── AddProduct.vue
-│ │ ├── EditProduct.vue
-│ │ └── Product.vue
-│ └── transaksi/
-│ ├── AddTransaksi.vue
-│ └── Transaksi.vue
-├── App.vue
-└── main.js
+## Endpoint
+
+| Method | Endpoint       | Deskripsi                |
+| ------ | -------------- | ------------------------ |
+| GET    | `/product`     | Mengambil semua produk   |
+| POST   | `/product`     | Menambah produk baru     |
+| GET    | `/product/:id` | Mendapatkan produk by ID |
+| PUT    | `/product/:id` | Update data produk       |
+| DELETE | `/product/:id` | Menghapus produk         |
+
+---
+
+## Routingan
+
+| Path                | Nama Router  | Komponen           |
+| ------------------- | ------------ | ------------------ |
+| `/`                 | dashboard    | `Dashboard.vue`    |
+| `/product`          | product      | `Product.vue`      |
+| `/product/add`      | addproduct   | `AddProduct.vue`   |
+| `/product/edit/:id` | editproduct  | `EditProduct.vue`  |
+| `/transaksi`        | transaksi    | `Transaksi.vue`    |
+| `/transaksi/add`    | addtransaksi | `AddTransaksi.vue` |
+| `/transaksi/edit/:id`| edittransaksi | `EditTransaksi.vue` |
 
 ---
 
@@ -76,27 +79,5 @@ src/
 
 ---
 
-## Endpoint
 
-| Method | Endpoint       | Deskripsi                |
-| ------ | -------------- | ------------------------ |
-| GET    | `/product`     | Mengambil semua produk   |
-| POST   | `/product`     | Menambah produk baru     |
-| GET    | `/product/:id` | Mendapatkan produk by ID |
-| PUT    | `/product/:id` | Update data produk       |
-| DELETE | `/product/:id` | Menghapus produk         |
-
----
-
-## Routingan
-
-| Path                | Nama Router  | Komponen           |
-| ------------------- | ------------ | ------------------ |
-| `/`                 | dashboard    | `Dashboard.vue`    |
-| `/product`          | product      | `Product.vue`      |
-| `/product/add`      | addproduct   | `AddProduct.vue`   |
-| `/product/edit/:id` | editproduct  | `EditProduct.vue`  |
-| `/transaksi`        | transaksi    | `Transaksi.vue`    |
-| `/transaksi/add`    | addtransaksi | `AddTransaksi.vue` |
-| `/transaksi/edit/:id`| edittransaksi | `EditTransaksi.vue` |
 
