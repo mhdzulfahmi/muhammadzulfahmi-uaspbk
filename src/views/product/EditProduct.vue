@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useProductStore } from '@/stores/ProductStore'
+import { useProductStore } from '@/stores/productStore.js'
 
 const router = useRouter()
 const route = useRoute()
