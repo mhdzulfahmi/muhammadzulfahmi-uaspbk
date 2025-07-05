@@ -10,10 +10,23 @@ const selectedKategori = ref('Semua')
 const customKategori = ref('')
 
 // Daftar kategori tetap
-const kategoriTetap = ['Semua', 'Kebutuhan Pokok', 'Makanan Ringan', 'Minuman', 'Bumbu Dapur', 'Kesehatan', 'Lainnya']
+const kategoriTetap = [
+  'Semua',
+  'Kebutuhan Pokok',
+  'Makanan Ringan',
+  'Minuman',
+  'Bumbu Dapur',
+  'Kesehatan',
+  'Lainnya'
+]
 
-onMounted(() => {
-  store.getProducts()
+// Tambahkan loading state
+const isLoading = ref(false)
+
+onMounted(async () => {
+  isLoading.value = true
+  await store.getProducts()
+  isLoading.value = false
 })
 
 const editProduct = (id) => {
@@ -71,8 +84,18 @@ watch(selectedKategori, (val) => {
       </div>
     </div>
 
+    <!-- Indikator Loading -->
+    <div v-if="isLoading" class="flex items-center justify-center py-12 text-blue-600">
+      <svg class="animate-spin h-6 w-6 mr-3 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor"
+          d="M4 12a8 8 0 018-8v8H4z"></path>
+      </svg>
+      Memuat data produk...
+    </div>
+
     <!-- Tabel Produk -->
-    <div class="overflow-x-auto bg-white shadow-md rounded-lg border border-gray-200">
+    <div v-else class="overflow-x-auto bg-white shadow-md rounded-lg border border-gray-200">
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gradient-to-r from-sky-100 to-blue-100">
           <tr>
@@ -122,3 +145,4 @@ watch(selectedKategori, (val) => {
     </div>
   </div>
 </template>
+
