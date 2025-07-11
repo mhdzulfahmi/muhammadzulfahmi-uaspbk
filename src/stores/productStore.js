@@ -28,7 +28,7 @@ export const useProductStore = defineStore('product', {
         // Ambil semua produk
         async getProducts() {
             try {
-                const res = await axios.get('https://nosy-working-equipment.glitch.me/product')
+                const res = await axios.get('http://localhost:3000/product')
                 this.products = res.data
             } catch (error) {
                 console.error('Gagal mengambil data produk:', error)
@@ -44,7 +44,7 @@ export const useProductStore = defineStore('product', {
                     : 0
 
                 const newProduct = { id: String(maxId + 1), ...product }
-                const res = await axios.post('https://nosy-working-equipment.glitch.me/product', newProduct)
+                const res = await axios.post('http://localhost:3000/product', newProduct)
                 this.products.push(res.data)
             } catch (error) {
                 console.error('Gagal menambahkan produk:', error)
@@ -54,7 +54,7 @@ export const useProductStore = defineStore('product', {
         // Update produk
         async updateProduct(id, updatedData) {
             try {
-                await axios.put(`https://nosy-working-equipment.glitch.me/product/${id}`, updatedData)
+                await axios.put(`http://localhost:3000/product/${id}`, updatedData)
                 const index = this.products.findIndex(p => p.id === id)
                 if (index !== -1) {
                     this.products[index] = { id, ...updatedData }
@@ -67,7 +67,7 @@ export const useProductStore = defineStore('product', {
         // Hapus produk
         async deleteProduct(id) {
             try {
-                await axios.delete(`https://nosy-working-equipment.glitch.me/product/${id}`)
+                await axios.delete(`http://localhost:3000/product/${id}`)
                 this.products = this.products.filter(p => p.id !== id)
             } catch (error) {
                 console.error('Gagal menghapus produk:', error)
